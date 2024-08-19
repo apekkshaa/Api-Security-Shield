@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# API Security Shield
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**API Security Shield** is a comprehensive platform designed to help developers and security teams manage, monitor, and secure their API infrastructure. This application provides an intuitive interface for tracking API usage, performing security scans, and receiving real-time notifications about potential security threats. Built on the MERN stack (MongoDB, Express, React, Node.js), API Security Shield is designed to be scalable and easy to integrate into existing workflows.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+API Security Shield offers a centralized platform where developers and security professionals can effectively manage their APIs, ensuring that they remain secure and functional. The platform is designed to handle a large number of APIs, providing a comprehensive view of their status, security, and usage.
 
-### `npm start`
+## What the Project Does
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### API Inventory Management
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+API Security Shield helps you maintain an organized inventory of all your APIs. Each API entry includes detailed information, such as the API name, endpoint, description, and associated metadata. This centralized inventory makes it easy to monitor and manage APIs across your entire infrastructure.
 
-### `npm test`
+### Security Scans
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The platform allows you to perform automated security scans on your APIs. These scans are designed to detect common vulnerabilities such as SQL injection, cross-site scripting (XSS), and insecure configurations. After each scan, you receive a detailed report highlighting potential risks and recommendations for remediation.
 
-### `npm run build`
+### Real-time Notifications
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+API Security Shield ensures that you are always informed about the state of your APIs. You receive real-time notifications whenever a security scan is completed, when new APIs are added to the inventory, or when a potential security threat is detected. Notifications can be configured based on severity levels, allowing you to prioritize your response.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### User Management and Roles
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The platform includes robust user management features, allowing administrators to create and manage users with different roles. This ensures that only authorized personnel can access sensitive features, such as security scans and API management.
 
-### `npm run eject`
+### Customizable Settings
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+API Security Shield provides a settings page where you can customize the platform to suit your needs. This includes configuring scan frequencies, notification preferences, and user permissions. The settings are designed to be flexible, allowing you to tailor the platform to your specific security requirements.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **API Inventory Management**: Track and manage your APIs with detailed information and metadata.
+- **Automated Security Scans**: Perform scans to detect vulnerabilities and receive actionable reports.
+- **Real-time Notifications**: Stay informed about API status, security threats, and updates with instant notifications.
+- **User Management**: Control access and permissions with a robust user management system.
+- **Customizable Settings**: Tailor the platform to your needs with flexible configuration options.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Technology Used
+- Backend:
+  - Node.js
+  - Express.js
+  - MongoDB
+  - Owasp-Zap
+- Frontend:
+  - React.js
+  - Bootstrap 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

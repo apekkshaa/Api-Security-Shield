@@ -1,6 +1,6 @@
 //routes/jestScan.js
 const axios = require('axios');
-require('dotenv').config();
+const token = process.env.GITHUB_TOKEN;
 
 async function initiateScan(apiUrl) {
     try {
@@ -11,7 +11,7 @@ async function initiateScan(apiUrl) {
 
         const response = await axios.get(apiUrl, {
             headers: {
-                'Authorization': `token ${process.env.GITHUB_TOKEN}`
+                'Authorization': `token ${token}`
             }
         });
 

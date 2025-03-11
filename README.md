@@ -47,3 +47,10 @@ API Security Shield provides a settings page where you can customize the platfor
   - React.js
   - Bootstrap 
 
+## command for jest scan at client server
+- npm test
+
+## command for dependency check at client server
+- npm run dependency-check
+
+## command for owasp zap scan

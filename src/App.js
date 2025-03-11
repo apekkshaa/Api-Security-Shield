@@ -5,7 +5,6 @@ import Home from './components/Home';
 import APIPage from './components/APIPage';
 import SecurityScansPage from './components/SecurityScansPage';
 import ReportsPage from './components/ReportsPage';
-import SettingsPage from './components/SettingsPage';
 
 
 function App() {
@@ -16,7 +15,6 @@ function App() {
         <Route path="/apis" element={<APIPage />} />
         <Route path="/security-scans" element={<SecurityScansPage />} />
         <Route path="/reports" element={<ReportsPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </div>
   );

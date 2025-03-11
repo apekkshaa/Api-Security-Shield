@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Chart, ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, PointElement, LineElement } from 'chart.js';
 import { Pie, Line } from 'react-chartjs-2';
 
-// Register the necessary components
 Chart.register(
     ArcElement,
     CategoryScale,
@@ -24,32 +23,26 @@ function Dashboard() {
     const [incidentTrends, setIncidentTrends] = useState([]);
 
     useEffect(() => {
-        // Fetch API Inventory
         fetch('http://localhost:5002/api/inventory')
             .then(response => response.json())
             .then(data => setApis(data));
 
-        // Fetch Inventory Summary
         fetch('http://localhost:5002/api/inventory-summary')
             .then(response => response.json())
             .then(data => setSummary(data));
 
-        // Fetch Recent Security Scans
         fetch('http://localhost:5002/api/recent-scans')
             .then(response => response.json())
             .then(data => setRecentScans(data));
 
-        // Fetch Incident Notifications
         fetch('http://localhost:5002/api/recent-incidents')
             .then(response => response.json())
             .then(data => setIncidentNotifications(data));
 
-        // Fetch API Security Status
         fetch('http://localhost:5002/api/api-security-status')
             .then(response => response.json())
             .then(data => setApiSecurityStatus(data));
 
-        // Fetch Incident Trends
         fetch('http://localhost:5002/api/incident-trends')
             .then(response => response.json())
             .then(data => setIncidentTrends(data));
@@ -69,7 +62,6 @@ function Dashboard() {
             });
     };
 
-    // Data for API Security Status Pie Chart
     const pieData = {
         labels: ['Secured APIs', 'Insecure APIs'],
         datasets: [
@@ -81,7 +73,6 @@ function Dashboard() {
         ]
     };
 
-    // Data for Incident Trends Line Chart
     const lineData = {
         labels: incidentTrends.map(item => `${item._id.month}/${item._id.year}`),
         datasets: [

@@ -16,7 +16,6 @@ function SecurityScansPage() {
     });
 
     useEffect(() => {
-        // Fetch the API inventory with the last scan details
         const fetchApis = async () => {
             try {
                 const response = await axios.get('http://localhost:5002/api/inventory');
@@ -33,7 +32,6 @@ function SecurityScansPage() {
         try {
             await axios.post(`http://localhost:5002/scans/initiate-scan/${apiId}`);
             alert('Scan initiated successfully!');
-            // Optionally, refresh the API list or fetch recent scans to update the UI
         } catch (error) {
             console.error('Error initiating scan:', error);
             alert('Failed to initiate scan.');
@@ -42,7 +40,6 @@ function SecurityScansPage() {
 
     const handleViewHistory = async (apiId) => {
         setSelectedApiId(apiId);
-        // This could open a modal or redirect to a detailed history page
         alert('Viewing scan history for API ID: ' + apiId);
     };
 

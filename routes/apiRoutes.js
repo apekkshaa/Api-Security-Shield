@@ -11,7 +11,6 @@ const initiateZapScan = require('../utils/zapScan');
 const axios = require('axios');
 const SSE = require('express-sse');
 
-// Inventory Summary dashboard
 router.get('/inventory-summary', async (req, res) => {
     try {
         const totalApisCount = await Api.countDocuments();
@@ -39,7 +38,6 @@ router.get('/inventory-summary', async (req, res) => {
     }
 });
 
-// API Inventory dashboard
 router.get('/inventory', async (req, res) => {
     try {
         const apisWithIssues = await Api.find({
@@ -53,7 +51,6 @@ router.get('/inventory', async (req, res) => {
     }
 });
 
-// API Inventory apis
 router.get('/APIinventory', async (req, res) => {
     try {
         const apis = await Api.find().sort({ lastScanned: -1 });
@@ -63,7 +60,6 @@ router.get('/APIinventory', async (req, res) => {
     }
 });
 
-// Fetch the version from the API URL
 async function fetchApiVersion(apiUrl) {
     try {
         const response = await axios.get(apiUrl, { timeout: 5000 });
@@ -78,7 +74,6 @@ async function fetchApiVersion(apiUrl) {
     }
 }
 
-// Update existing API version for all APIs
 async function updateApiVersions() {
     const apis = await Api.find();
     for (const api of apis) {
@@ -88,10 +83,8 @@ async function updateApiVersions() {
     }
 }
 
-// Call updateApiVersions when server starts
 updateApiVersions().catch(console.error);
 
-// Update versions for all existing APIs
 router.put('/update-api-versions', async (req, res) => {
     try {
         const apis = await Api.find();
@@ -108,24 +101,19 @@ router.put('/update-api-versions', async (req, res) => {
     }
 });
 
-// Initialize notifications array
 let notifications = [];
 
-// Route to fetch notifications
 router.get('/notifications', (req, res) => {
     res.json(notifications.slice(-15));
 });
 
-// Function to send notifications
 function sendNotification(message) {
     notifications.push({ message, timestamp: new Date() });
-    // Limit the notifications array length (e.g., keep only the latest 10 notifications)
     if (notifications.length > 15) {
         notifications.shift();
     }
 }
 
-// Create a new API entry
 router.post('/add-api', async (req, res) => {
     try {
         const { name, apiUrl, version } = req.body;
@@ -154,11 +142,9 @@ router.post('/add-api', async (req, res) => {
     }
 });
 
-// Get the most recent security scans
 router.get('/recent-scans', async (req, res) => {
     try {
-        // Fetch the most recent scans, including API name and security status
-        const scans = await Scan.find({}, 'apiName outcome') // Adjust fields as necessary
+        const scans = await Scan.find({}, 'apiName outcome')
             .sort({ scanDate: -1 })
             .limit(5);
         res.json(scans);
@@ -167,9 +153,6 @@ router.get('/recent-scans', async (req, res) => {
     }
 });
 
-
-
-// Add a new security scan (for testing/demo purposes)
 router.post('/add-scan', async (req, res) => {
     const { apiName, outcome, vulnerabilities } = req.body;
     if (!apiName || !outcome) {
@@ -186,7 +169,6 @@ router.post('/add-scan', async (req, res) => {
     }
 });
 
-// Mark an incident as resolved
 router.put('/resolve-incident/:id', async (req, res) => {
     try {
         const incident = await Incident.findByIdAndUpdate(req.params.id, { resolved: true }, { new: true });
@@ -196,7 +178,6 @@ router.put('/resolve-incident/:id', async (req, res) => {
     }
 });
 
-// Get API security status summary
 router.get('/api-security-status', async (req, res) => {
     try {
         const securedApis = await Api.countDocuments({ securityStatus: 'Secure' });
@@ -213,14 +194,11 @@ router.get('/api-security-status', async (req, res) => {
     }
 });
 
-// Initialize SSE instance
 const sse = new SSE();
-// Route to subscribe to scan events
 router.get('/scan-events', (req, res) => {
     sse.init(req, res);
 });
 
-// Initiate a scan for a specific API
 router.post('/initiate-scan/:apiId', async (req, res) => {
     const { apiId } = req.params;
 
@@ -233,7 +211,6 @@ router.post('/initiate-scan/:apiId', async (req, res) => {
         if (!api.apiUrl) {
             return res.status(400).json({ message: 'API URL is missing' });
         }
-        // Notify scan initiation
         sendNotification(`Scan initiated for API: ${api.name}`);
         sse.send({ message: 'Scan initiated for API: ' + api.apiUrl }, 'scanStatus');
 
@@ -246,7 +223,6 @@ router.post('/initiate-scan/:apiId', async (req, res) => {
         api.lastScanned = new Date();
         await api.save();
 
-        // Generate and save a report
         const newReport = new Report({
             apiName: api.name,
             generatedAt: new Date(),
@@ -263,7 +239,6 @@ router.post('/initiate-scan/:apiId', async (req, res) => {
         });
         await scanSummary.save();
 
-        // Notify scan completion
         sse.send({ message: 'Scan completed for API: ' + api.apiUrl }, 'scanStatus');
         sendNotification(`Scan completed for API: ${api.name}`);
 
@@ -279,7 +254,6 @@ router.post('/initiate-scan/:apiId', async (req, res) => {
     }
 });
 
-// Endpoint to get all reports
 router.get('/reports', async (req, res) => {
     try {
         const reports = await Report.find();
@@ -289,7 +263,6 @@ router.get('/reports', async (req, res) => {
     }
 });
 
-// Endpoint to get a specific report by ID
 router.get('/report/:id', async (req, res) => {
     try {
         const report = await Report.findById(req.params.id);
@@ -302,7 +275,6 @@ router.get('/report/:id', async (req, res) => {
     }
 });
 
-// Endpoint to generate a new report after a scan
 router.post('/generate-report', async (req, res) => {
     const { apiName, scanResults, vulnerabilities } = req.body;
     console.log('Request Body:', { apiName, scanResults, vulnerabilities });
@@ -324,7 +296,6 @@ router.post('/generate-report', async (req, res) => {
     }
 });
 
-// Get scan summary by scan ID
 router.get('/scan-summary/:apiId', async (req, res) => {
     const { apiId } = req.params;
     console.log(`Received API ID: ${apiId}`);
@@ -350,7 +321,6 @@ router.get('/scan-summary/:apiId', async (req, res) => {
     }
 });
 
-// Get detailed information about a specific API by ID
 router.get('/api-detail/:apiId', async (req, res) => {
     const { apiId } = req.params;
 
@@ -369,7 +339,6 @@ router.get('/api-detail/:apiId', async (req, res) => {
     }
 });
 
-// Define the route to trigger the dependency check
 router.get('/run-dependency-check', async (req, res) => {
     try {
         const reportPath = await runDependencyCheck();
@@ -379,7 +348,6 @@ router.get('/run-dependency-check', async (req, res) => {
     }
 });
 
-//endpoint to initiate a scan for all APIs stored in the database
 router.post('/initiate-scan-all', async (req, res) => {
     try {
         const apis = await Api.find();
@@ -389,7 +357,6 @@ router.post('/initiate-scan-all', async (req, res) => {
                 console.warn(`Skipping API with ID ${api._id} due to missing URL.`);
                 return { apiId: api._id, message: 'API URL is missing' };
             }
-            // Notify scan initiation
             sse.send({ message: 'Scan initiated for API: ' + api.apiUrl }, 'scanStatus');
 
             console.log(`Initiating scan for API: ${api.apiUrl}`);
@@ -402,7 +369,6 @@ router.post('/initiate-scan-all', async (req, res) => {
             api.securityStatus = result.status;
             api.lastScanned = new Date();
             await api.save();
-            // Notify scan completion
             sse.send({ message: 'Scan completed for API: ' + api.apiUrl }, 'scanStatus');
 
 
@@ -422,7 +388,6 @@ router.post('/initiate-scan-all', async (req, res) => {
     }
 });
 
-// Get scan history for a specific API
 router.get('/:apiId/scans', async (req, res) => {
     const { apiId } = req.params;
 
@@ -434,7 +399,6 @@ router.get('/:apiId/scans', async (req, res) => {
     }
 });
 
-// Get API details
 router.get('/api/:id', async (req, res) => {
     try {
         const api = await Api.findById(req.params.id);
@@ -453,7 +417,6 @@ router.get('/api/APIdetails/:id', (req, res) => {
         .catch(err => res.status(500).json({ error: 'Error fetching API details' }));
 });
 
-// Update API security status
 router.put('/api/:id', async (req, res) => {
     const { id } = req.params;
     const { securityStatus } = req.body;

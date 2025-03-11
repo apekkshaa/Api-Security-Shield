@@ -3,7 +3,6 @@ const router = express.Router();
 const Scan = require('../models/Scan');
 const Api = require('../models/Api');
 
-// Route to initiate a scan for a specific API
 router.post('/initiate-scan/:apiId', async (req, res) => {
     const { apiId } = req.params;
 
@@ -48,7 +47,6 @@ router.post('/initiate-scan/:apiId', async (req, res) => {
     }
 });
 
-// Route to get all scans for a specific API
 router.get('/:apiId/scans', async (req, res) => {
     const { apiId } = req.params;
 
@@ -60,7 +58,6 @@ router.get('/:apiId/scans', async (req, res) => {
     }
 });
 
-// Route to update scan settings for a specific API
 router.put('/:apiId/scan-settings', async (req, res) => {
     const { apiId } = req.params;
     const { frequency, depth, vulnerabilitiesToCheck } = req.body;

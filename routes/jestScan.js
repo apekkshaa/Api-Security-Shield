@@ -1,6 +1,6 @@
 //routes/jestScan.js
 const axios = require('axios');
-const token = process.env.GITHUB_TOKEN;
+//const token = process.env.GITHUB_TOKEN;
 
 async function initiateScan(apiUrl) {
     try {
@@ -11,7 +11,7 @@ async function initiateScan(apiUrl) {
 
         const response = await axios.get(apiUrl, {
             headers: {
-                'Authorization': `token ${token}`
+                //'Authorization': `token ${token}`
             }
         });
 
@@ -49,7 +49,7 @@ async function isValidApiUrl(url) {
 
         const response = await axios.get(url, {
             headers: {
-                'Authorization': `token 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`
+                //'Authorization': `token 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`
             },
             timeout: 10000,
         });
